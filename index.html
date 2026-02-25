@@ -171,15 +171,29 @@
         else { btn.classList.add('btn-wrong'); scores[groupID] = 0; }
     }
 
-   function finish() {
+  function finish() {
     let name = document.getElementById('p_name').value || "Мальк герой";
     let pts = Object.values(scores).reduce((a, b) => a + b, 0);
     let total = Object.keys(answeredGroups).length;
     
     if (total < 1) { alert("Първо реши задачите!"); return; }
 
-    // --- АВТОМАТИЧНО ИЗПРАЩАНЕ КЪМ ТАБЛИЦАТА ---
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdO7i9eP_z7_S67L_X8_X_X_X_X_X_X/formResponse"; 
+    // --- АВТОМАТИЧНО ИЗПРАЩАНЕ КЪМ ТВОЯТА ТАБЛИЦА ---
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSe3Rn-EwoFttD4BSj5mYGIdlBr3sH9snl6b6fw8a1TnbeHRLA/formResponse"; 
+    const entryName = "entry.791731753"; // Твоето поле за Име
+    const entryScore = "entry.390007244"; // Твоето поле за Точки
+    
+    const finalURL = `${formURL}?${entryName}=${encodeURIComponent(name)}&${entryScore}=${encodeURIComponent(pts + ' от ' + total)}&submit=Submit`;
+    
+    // Изпращане чрез скрит образ (най-сигурният начин за Google Forms)
+    const sendLog = new Image();
+    sendLog.src = finalURL;
+    // ----------------------------------------------
+
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
+    confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
+}
     const entryName = "entry.1030062060"; // Поле за име
     const entryScore = "entry.1206124505"; // Поле за резултат
     
@@ -197,3 +211,4 @@
 </body>
 
 </html>
+
