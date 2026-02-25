@@ -171,73 +171,15 @@
         else { btn.classList.add('btn-wrong'); scores[groupID] = 0; }
     }
 
- function finish() {
-    let name = document.getElementById('p_name').value || "Мальк герой";
-    let pts = Object.values(scores).reduce((a, b) => a + b, 0);
-    let total = Object.keys(answeredGroups).length;
-    
-    if (total < 1) { alert("Първо реши задачите!"); return; }
-
-    // --- НАДЕЖДНО ИЗПРАЩАНЕ КЪМ GOOGLE FORMS ---
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSe3Rn-EwoFttD4BSj5mYGIdlBr3sH9snl6b6fw8a1TnbeHRLA/formResponse";
-    
-    const formData = new FormData();
-    formData.append("entry.791731753", name); // Твоето поле за име
-    formData.append("entry.390007244", pts + " от " + total); // Твоето поле за точки
-
-    // Изпращане чрез fetch - най-модерният начин
-    fetch(formURL, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    }).then(() => {
-        console.log("Данните са изпратени успешно!");
-    }).catch((error) => {
-        console.error("Грешка при изпращане:", error);
-    });
-    // ------------------------------------------
-
-    document.getElementById('overlay').style.display = 'flex';
-    document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
-    
-    // Празнични конфенти
-    confetti({ 
-        particleCount: 500, 
-        spread: 150, 
-        origin: { y: 0.6 },
-        colors: ['#ff0066', '#ffcc00', '#2196f3', '#4caf50']
-    });
-}
-    const entryName = "entry.791731753"; // Твоето поле за Име
-    const entryScore = "entry.390007244"; // Твоето поле за Точки
-    
-    const finalURL = `${formURL}?${entryName}=${encodeURIComponent(name)}&${entryScore}=${encodeURIComponent(pts + ' от ' + total)}&submit=Submit`;
-    
-    // Изпращане чрез скрит образ (най-сигурният начин за Google Forms)
-    const sendLog = new Image();
-    sendLog.src = finalURL;
-    // ----------------------------------------------
-
-    document.getElementById('overlay').style.display = 'flex';
-    document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
-    confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
-}
-    const entryName = "entry.1030062060"; // Поле за име
-    const entryScore = "entry.1206124505"; // Поле за резултат
-    
-    const finalURL = `${formURL}?${entryName}=${encodeURIComponent(name)}&${entryScore}=${encodeURIComponent(pts + ' от ' + total)}&submit=Submit`;
-    
-    const sendLog = new Image();
-    sendLog.src = finalURL;
-    // ------------------------------------------
-
-    document.getElementById('overlay').style.display = 'flex';
-    document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
-    confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
-}
+    function finish() {
+        let name = document.getElementById('p_name').value || "Малък герой";
+        let pts = Object.values(scores).reduce((a, b) => a + b, 0);
+        let total = Object.keys(answeredGroups).length;
+        if (total < 1) { alert("Първо реши задачите!"); return; }
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
+        confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
+    }
 </script>
 </body>
-
 </html>
-
-
