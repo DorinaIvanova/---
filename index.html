@@ -170,24 +170,24 @@
         if (btn.innerText === ans) { scores[groupID] = 1; } 
         else { btn.classList.add('btn-wrong'); scores[groupID] = 0; }
     }
-
-   function finish() {
+function finish() {
     let name = document.getElementById('p_name').value || "Малки герои";
     let pts = Object.values(scores).reduce((a, b) => a + b, 0);
     let total = Object.keys(answeredGroups).length;
-    
+
     if (total < 1) { alert("Първо реши задачите!"); return; }
 
-    // ТОВА СА НОВИТЕ РЕДОВЕ ЗА ТАБЛИЦАТА:
     fetch("https://sheetdb.io/api/v1/si1t90uvg95jc", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            data: [{ 'name': name, 'score': pts + " от " + total }]
+            data: [{ 
+                "name": name, 
+                "score": pts + " от " + total 
+            }]
         })
     });
 
-    // ЕФЕКТИТЕ НА ЕКРАНА:
     document.getElementById('overlay').style.display = 'flex';
     document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
     confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
@@ -195,5 +195,6 @@
 </script>
 </body>
 </html>
+
 
 
