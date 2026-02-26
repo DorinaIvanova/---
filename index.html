@@ -177,10 +177,11 @@
         let total = Object.keys(answeredGroups).length;
         if (total < 1) { alert("Първо реши задачите!"); return; }
         document.getElementById('overlay').style.display = 'flex';
-        document.getElementById('res-text').innerText = name + ", ти събра " + pts + " точки от " + total + "!";
+        document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
         confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
     }
 </script>
 </body>
 </html>
+
 
