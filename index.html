@@ -7,15 +7,11 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
-        
         body { font-family: 'Comfortaa', cursive; background: #fff5f5; margin: 0; padding: 10px; color: #333; }
         .main-container { max-width: 950px; background: white; margin: auto; padding: 30px; border-radius: 60px; border: 12px solid #ffcc00; box-shadow: 0 20px 0 #ff9900; }
-        
-        .title-box { text-align: center; background: linear-gradient(45deg, #ff0066, #ffcc00); color: white; padding: 30px; border-radius: 40px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        
+        .title-box { text-align: center; background: linear-gradient(45deg, #ff0066, #ffcc00); color: white; padding: 30px; border-radius: 40px; margin-bottom: 30px; }
         .name-section { text-align: center; margin-bottom: 30px; background: #fffde7; padding: 25px; border-radius: 30px; border: 4px dashed #ff0066; }
         .name-section input { padding: 15px; border-radius: 20px; border: 4px solid #ff0066; font-family: 'Comfortaa'; font-size: 1.5rem; width: 80%; text-align: center; outline: none; }
-
         .card { padding: 25px; border-radius: 45px; margin-bottom: 35px; border: 8px solid; box-shadow: 0 12px 0 rgba(0,0,0,0.05); }
         .card-1 { background: #e3f2fd; border-color: #2196f3; }
         .card-2 { background: #fce4ec; border-color: #f06292; }
@@ -23,112 +19,96 @@
         .card-4 { background: #e0f7fa; border-color: #00bcd4; }
         .card-5 { background: #e8f5e9; border-color: #4caf50; }
         .card-6 { background: #fffde7; border-color: #fdd835; }
-
-        h2 { font-size: 2rem; text-align: center; margin-top: 0; color: #333; text-shadow: 1px 1px 0 white; }
+        h2 { font-size: 1.8rem; text-align: center; margin-top: 0; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .task-unit { background: rgba(255,255,255,0.85); padding: 20px; border-radius: 30px; text-align: center; border: 3px solid #eee; }
-        .math-text { font-size: 2.2rem; display: block; margin-bottom: 15px; font-weight: bold; }
-        
-        .empty-box { display: inline-block; width: 55px; height: 55px; border: 4px solid #ff9900; border-radius: 12px; background: white; vertical-align: middle; margin: 0 10px; box-shadow: inset 0 4px 6px rgba(0,0,0,0.1); }
-
-        .opts { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .btn-opt { padding: 12px 18px; font-size: 1.4rem; border-radius: 18px; border: 4px solid #ced4da; background: white; cursor: pointer; font-family: 'Comfortaa'; transition: 0.2s; min-width: 65px; box-shadow: 0 5px 0 #ddd; }
-        .btn-opt:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #ccc; }
-        
-        .btn-correct { background: #4caf50 !important; color: white !important; border-color: #2e7d32 !important; box-shadow: 0 5px 0 #1b5e20 !important; }
-        .btn-wrong { background: #f44336 !important; color: white !important; border-color: #c62828 !important; box-shadow: 0 5px 0 #8e1b1b !important; }
-        .locked { pointer-events: none; opacity: 0.95; }
-
-        .castle-img { width: 100%; max-width: 420px; border-radius: 45px; border: 12px solid #4caf50; margin: 25px auto; display: block; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-
-        .finish-button { background: linear-gradient(#ff0066, #c2004d); color: white; border: none; padding: 35px; width: 100%; font-size: 3rem; border-radius: 60px; cursor: pointer; font-family: 'Comfortaa'; box-shadow: 0 15px 0 #8e0036; margin-top: 40px; }
-        
+        .task-unit { background: rgba(255,255,255,0.85); padding: 15px; border-radius: 30px; text-align: center; border: 2px solid #eee; }
+        .math-text { font-size: 2rem; display: block; margin-bottom: 10px; font-weight: bold; }
+        .empty-box { display: inline-block; width: 50px; height: 50px; border: 3px solid #ff9900; border-radius: 10px; background: white; vertical-align: middle; line-height: 50px; font-size: 1.5rem; color: #ff0066; }
+        .opts { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .btn-opt { padding: 10px 15px; font-size: 1.2rem; border-radius: 15px; border: 3px solid #ced4da; background: white; cursor: pointer; font-family: 'Comfortaa'; transition: 0.2s; }
+        .btn-correct { background: #4caf50 !important; color: white !important; border-color: #2e7d32 !important; }
+        .btn-wrong { background: #f44336 !important; color: white !important; border-color: #c62828 !important; }
+        .locked { pointer-events: none; opacity: 0.8; }
+        .castle-img { width: 100%; max-width: 400px; border-radius: 30px; border: 8px solid #4caf50; margin: 20px auto; display: block; }
+        .finish-button { background: linear-gradient(#ff0066, #c2004d); color: white; border: none; padding: 25px; width: 100%; font-size: 2.5rem; border-radius: 50px; cursor: pointer; font-family: 'Comfortaa'; box-shadow: 0 10px 0 #8e0036; margin-top: 30px; }
         #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
-        .success-card { background: white; padding: 50px; border-radius: 60px; border: 12px solid #ffcc00; max-width: 700px; }
+        .success-card { background: white; padding: 40px; border-radius: 50px; border: 10px solid #ffcc00; max-width: 600px; }
     </style>
 </head>
 <body>
 
 <div class="main-container">
     <div class="title-box"><h1>🌟 ПАЗИТЕЛИТЕ НА ЧИСЛАТА 🌟</h1></div>
-
-    <div class="name-section"><input type="text" id="p_name" placeholder="👦 Твоето име тук 👧"></div>
+    <div class="name-section"><input type="text" id="p_name" placeholder="👦 Име на отбора 👧"></div>
 
     <div class="card card-1">
         <h2>Зад. 1: 🚀 Ракети към Слънцето</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">12 + 4</span><div class="opts" data-id="q1"><button class="btn-opt" onclick="chk(this, 16, 'q1')">16</button><button class="btn-opt" onclick="chk(this, 16, 'q1')">15</button><button class="btn-opt" onclick="chk(this, 16, 'q1')">17</button></div></div>
-            <div class="task-unit"><span class="math-text">5 + 5</span><div class="opts" data-id="q2"><button class="btn-opt" onclick="chk(this, 10, 'q2')">9</button><button class="btn-opt" onclick="chk(this, 10, 'q2')">11</button><button class="btn-opt" onclick="chk(this, 10, 'q2')">10</button></div></div>
-            <div class="task-unit"><span class="math-text">12 + 5</span><div class="opts" data-id="q3"><button class="btn-opt" onclick="chk(this, 17, 'q3')">16</button><button class="btn-opt" onclick="chk(this, 17, 'q3')">18</button><button class="btn-opt" onclick="chk(this, 17, 'q3')">17</button></div></div>
-            <div class="task-unit"><span class="math-text">6 + 3</span><div class="opts" data-id="q4"><button class="btn-opt" onclick="chk(this, 9, 'q4')">9</button><button class="btn-opt" onclick="chk(this, 9, 'q4')">8</button><button class="btn-opt" onclick="chk(this, 9, 'q4')">10</button></div></div>
-            <div class="task-unit"><span class="math-text">10 + 4</span><div class="opts" data-id="q5"><button class="btn-opt" onclick="chk(this, 14, 'q5')">13</button><button class="btn-opt" onclick="chk(this, 14, 'q5')">15</button><button class="btn-opt" onclick="chk(this, 14, 'q5')">14</button></div></div>
-            <div class="task-unit"><span class="math-text">9 + 1</span><div class="opts" data-id="q6"><button class="btn-opt" onclick="chk(this, 10, 'q6')">10</button><button class="btn-opt" onclick="chk(this, 10, 'q6')">8</button><button class="btn-opt" onclick="chk(this, 10, 'q6')">12</button></div></div>
+            <div class="task-unit"><span class="math-text">12 + 4</span><div class="opts"><button class="btn-opt" onclick="chk(this, 16)">16</button><button class="btn-opt" onclick="chk(this, 16)">15</button><button class="btn-opt" onclick="chk(this, 16)">17</button></div></div>
+            <div class="task-unit"><span class="math-text">5 + 5</span><div class="opts"><button class="btn-opt" onclick="chk(this, 10)">9</button><button class="btn-opt" onclick="chk(this, 10)">11</button><button class="btn-opt" onclick="chk(this, 10)">10</button></div></div>
+            <div class="task-unit"><span class="math-text">12 + 5</span><div class="opts"><button class="btn-opt" onclick="chk(this, 17)">16</button><button class="btn-opt" onclick="chk(this, 17)">18</button><button class="btn-opt" onclick="chk(this, 17)">17</button></div></div>
+            <div class="task-unit"><span class="math-text">6 + 3</span><div class="opts"><button class="btn-opt" onclick="chk(this, 9)">9</button><button class="btn-opt" onclick="chk(this, 9)">8</button><button class="btn-opt" onclick="chk(this, 9)">10</button></div></div>
+            <div class="task-unit"><span class="math-text">10 + 4</span><div class="opts"><button class="btn-opt" onclick="chk(this, 14)">13</button><button class="btn-opt" onclick="chk(this, 14)">15</button><button class="btn-opt" onclick="chk(this, 14)">14</button></div></div>
+            <div class="task-unit"><span class="math-text">9 + 1</span><div class="opts"><button class="btn-opt" onclick="chk(this, 10)">10</button><button class="btn-opt" onclick="chk(this, 10)">8</button><button class="btn-opt" onclick="chk(this, 10)">12</button></div></div>
         </div>
     </div>
 
     <div class="card card-2">
         <h2>Зад. 2: 🕵️ Магьосникът „Минус“</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">10 - 8</span><div class="opts" data-id="q7"><button class="btn-opt" onclick="chk(this, 2, 'q7')">1</button><button class="btn-opt" onclick="chk(this, 2, 'q7')">3</button><button class="btn-opt" onclick="chk(this, 2, 'q7')">2</button></div></div>
-            <div class="task-unit"><span class="math-text">13 - 1</span><div class="opts" data-id="q8"><button class="btn-opt" onclick="chk(this, 12, 'q8')">12</button><button class="btn-opt" onclick="chk(this, 12, 'q8')">11</button><button class="btn-opt" onclick="chk(this, 12, 'q8')">14</button></div></div>
-            <div class="task-unit"><span class="math-text">17 - 5</span><div class="opts" data-id="q9"><button class="btn-opt" onclick="chk(this, 12, 'q9')">10</button><button class="btn-opt" onclick="chk(this, 12, 'q9')">12</button><button class="btn-opt" onclick="chk(this, 12, 'q9')">15</button></div></div>
-            <div class="task-unit"><span class="math-text">8 - 4</span><div class="opts" data-id="q10"><button class="btn-opt" onclick="chk(this, 4, 'q10')">3</button><button class="btn-opt" onclick="chk(this, 4, 'q10')">5</button><button class="btn-opt" onclick="chk(this, 4, 'q10')">4</button></div></div>
-            <div class="task-unit"><span class="math-text">9 - 1</span><div class="opts" data-id="q11"><button class="btn-opt" onclick="chk(this, 8, 'q11')">8</button><button class="btn-opt" onclick="chk(this, 8, 'q11')">7</button><button class="btn-opt" onclick="chk(this, 8, 'q11')">9</button></div></div>
-            <div class="task-unit"><span class="math-text">18 - 7</span><div class="opts" data-id="q12"><button class="btn-opt" onclick="chk(this, 11, 'q12')">10</button><button class="btn-opt" onclick="chk(this, 11, 'q12')">12</button><button class="btn-opt" onclick="chk(this, 11, 'q12')">11</button></div></div>
+            <div class="task-unit"><span class="math-text">10 - 8</span><div class="opts"><button class="btn-opt" onclick="chk(this, 2)">1</button><button class="btn-opt" onclick="chk(this, 2)">3</button><button class="btn-opt" onclick="chk(this, 2)">2</button></div></div>
+            <div class="task-unit"><span class="math-text">13 - 1</span><div class="opts"><button class="btn-opt" onclick="chk(this, 12)">12</button><button class="btn-opt" onclick="chk(this, 12)">11</button><button class="btn-opt" onclick="chk(this, 12)">14</button></div></div>
+            <div class="task-unit"><span class="math-text">17 - 5</span><div class="opts"><button class="btn-opt" onclick="chk(this, 12)">10</button><button class="btn-opt" onclick="chk(this, 12)">12</button><button class="btn-opt" onclick="chk(this, 12)">15</button></div></div>
+            <div class="task-unit"><span class="math-text">8 - 4</span><div class="opts"><button class="btn-opt" onclick="chk(this, 4)">3</button><button class="btn-opt" onclick="chk(this, 4)">5</button><button class="btn-opt" onclick="chk(this, 4)">4</button></div></div>
+            <div class="task-unit"><span class="math-text">9 - 1</span><div class="opts"><button class="btn-opt" onclick="chk(this, 8)">8</button><button class="btn-opt" onclick="chk(this, 8)">7</button><button class="btn-opt" onclick="chk(this, 8)">9</button></div></div>
+            <div class="task-unit"><span class="math-text">18 - 7</span><div class="opts"><button class="btn-opt" onclick="chk(this, 11)">10</button><button class="btn-opt" onclick="chk(this, 11)">12</button><button class="btn-opt" onclick="chk(this, 11)">11</button></div></div>
         </div>
     </div>
 
     <div class="card card-3">
         <h2>Зад. 3: 🐸 Жабешки скок през десет</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">9 + 5</span><div class="opts" data-id="q13"><button class="btn-opt" onclick="chk(this, 14, 'q13')">14</button><button class="btn-opt" onclick="chk(this, 14, 'q13')">13</button><button class="btn-opt" onclick="chk(this, 14, 'q13')">15</button></div></div>
-            <div class="task-unit"><span class="math-text">8 + 3</span><div class="opts" data-id="q14"><button class="btn-opt" onclick="chk(this, 11, 'q14')">10</button><button class="btn-opt" onclick="chk(this, 11, 'q14')">11</button><button class="btn-opt" onclick="chk(this, 11, 'q14')">12</button></div></div>
-            <div class="task-unit"><span class="math-text">7 + 7</span><div class="opts" data-id="q15"><button class="btn-opt" onclick="chk(this, 14, 'q15')">13</button><button class="btn-opt" onclick="chk(this, 14, 'q15')">15</button><button class="btn-opt" onclick="chk(this, 14, 'q15')">14</button></div></div>
-            <div class="task-unit"><span class="math-text">9 + 2</span><div class="opts" data-id="q16"><button class="btn-opt" onclick="chk(this, 11, 'q16')">11</button><button class="btn-opt" onclick="chk(this, 11, 'q16')">10</button><button class="btn-opt" onclick="chk(this, 11, 'q16')">13</button></div></div>
-            <div class="task-unit"><span class="math-text">8 + 4</span><div class="opts" data-id="q17"><button class="btn-opt" onclick="chk(this, 12, 'q17')">11</button><button class="btn-opt" onclick="chk(this, 12, 'q17')">13</button><button class="btn-opt" onclick="chk(this, 12, 'q17')">12</button></div></div>
-            <div class="task-unit"><span class="math-text">9 + 6</span><div class="opts" data-id="q18"><button class="btn-opt" onclick="chk(this, 15, 'q18')">15</button><button class="btn-opt" onclick="chk(this, 15, 'q18')">14</button><button class="btn-opt" onclick="chk(this, 15, 'q18')">16</button></div></div>
+            <div class="task-unit"><span class="math-text">9 + 5</span><div class="opts"><button class="btn-opt" onclick="chk(this, 14)">14</button><button class="btn-opt" onclick="chk(this, 14)">13</button><button class="btn-opt" onclick="chk(this, 14)">15</button></div></div>
+            <div class="task-unit"><span class="math-text">8 + 3</span><div class="opts"><button class="btn-opt" onclick="chk(this, 11)">10</button><button class="btn-opt" onclick="chk(this, 11)">11</button><button class="btn-opt" onclick="chk(this, 11)">12</button></div></div>
+            <div class="task-unit"><span class="math-text">7 + 7</span><div class="opts"><button class="btn-opt" onclick="chk(this, 14)">13</button><button class="btn-opt" onclick="chk(this, 14)">15</button><button class="btn-opt" onclick="chk(this, 14)">14</button></div></div>
+            <div class="task-unit"><span class="math-text">9 + 6</span><div class="opts"><button class="btn-opt" onclick="chk(this, 15)">15</button><button class="btn-opt" onclick="chk(this, 15)">14</button><button class="btn-opt" onclick="chk(this, 15)">16</button></div></div>
         </div>
     </div>
 
     <div class="card card-2" style="background: #fff0f6; border-color: #f06595;">
         <h2>Зад. 4: 🗝️ Ключът към тайната врата</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">12 - 3</span><div class="opts" data-id="q19"><button class="btn-opt" onclick="chk(this, 9, 'q19')">8</button><button class="btn-opt" onclick="chk(this, 9, 'q19')">10</button><button class="btn-opt" onclick="chk(this, 9, 'q19')">9</button></div></div>
-            <div class="task-unit"><span class="math-text">14 - 5</span><div class="opts" data-id="q20"><button class="btn-opt" onclick="chk(this, 9, 'q20')">9</button><button class="btn-opt" onclick="chk(this, 9, 'q20')">8</button><button class="btn-opt" onclick="chk(this, 9, 'q20')">10</button></div></div>
-            <div class="task-unit"><span class="math-text">18 - 9</span><div class="opts" data-id="q21"><button class="btn-opt" onclick="chk(this, 9, 'q21')">8</button><button class="btn-opt" onclick="chk(this, 9, 'q21')">9</button><button class="btn-opt" onclick="chk(this, 9, 'q21')">10</button></div></div>
-            <div class="task-unit"><span class="math-text">16 - 8</span><div class="opts" data-id="q22"><button class="btn-opt" onclick="chk(this, 8, 'q22')">7</button><button class="btn-opt" onclick="chk(this, 8, 'q22')">9</button><button class="btn-opt" onclick="chk(this, 8, 'q22')">8</button></div></div>
-            <div class="task-unit"><span class="math-text">13 - 6</span><div class="opts" data-id="q23"><button class="btn-opt" onclick="chk(this, 7, 'q23')">7</button><button class="btn-opt" onclick="chk(this, 7, 'q23')">6</button><button class="btn-opt" onclick="chk(this, 7, 'q23')">8</button></div></div>
-            <div class="task-unit"><span class="math-text">11 - 6</span><div class="opts" data-id="q24"><button class="btn-opt" onclick="chk(this, 5, 'q24')">4</button><button class="btn-opt" onclick="chk(this, 5, 'q24')">6</button><button class="btn-opt" onclick="chk(this, 5, 'q24')">5</button></div></div>
+            <div class="task-unit"><span class="math-text">12 - 3</span><div class="opts"><button class="btn-opt" onclick="chk(this, 9)">8</button><button class="btn-opt" onclick="chk(this, 9)">10</button><button class="btn-opt" onclick="chk(this, 9)">9</button></div></div>
+            <div class="task-unit"><span class="math-text">14 - 5</span><div class="opts"><button class="btn-opt" onclick="chk(this, 9)">9</button><button class="btn-opt" onclick="chk(this, 9)">8</button><button class="btn-opt" onclick="chk(this, 9)">10</button></div></div>
+            <div class="task-unit"><span class="math-text">18 - 9</span><div class="opts"><button class="btn-opt" onclick="chk(this, 9)">8</button><button class="btn-opt" onclick="chk(this, 9)">9</button><button class="btn-opt" onclick="chk(this, 9)">10</button></div></div>
+            <div class="task-unit"><span class="math-text">16 - 8</span><div class="opts"><button class="btn-opt" onclick="chk(this, 8)">7</button><button class="btn-opt" onclick="chk(this, 8)">9</button><button class="btn-opt" onclick="chk(this, 8)">8</button></div></div>
         </div>
     </div>
 
     <div class="card card-4">
         <h2>Зад. 5: 🐊 Гладният крокодил</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">12 <div class="empty-box"></div> 18</span><div class="opts" data-id="s1"><button class="btn-opt" onclick="chkS(this, '<', 's1')">&lt;</button><button class="btn-opt" onclick="chkS(this, '<', 's1')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 's1')">=</button></div></div>
-            <div class="task-unit"><span class="math-text">15 <div class="empty-box"></div> 15</span><div class="opts" data-id="s2"><button class="btn-opt" onclick="chkS(this, '=', 's2')">&gt;</button><button class="btn-opt" onclick="chkS(this, '=', 's2')">&lt;</button><button class="btn-opt" onclick="chkS(this, '=', 's2')">=</button></div></div>
-            <div class="task-unit"><span class="math-text">9 <div class="empty-box"></div> 10</span><div class="opts" data-id="s3"><button class="btn-opt" onclick="chkS(this, '<', 's3')">=</button><button class="btn-opt" onclick="chkS(this, '<', 's3')">&lt;</button><button class="btn-opt" onclick="chkS(this, '<', 's3')">&gt;</button></div></div>
-            <div class="task-unit"><span class="math-text">13 <div class="empty-box"></div> 10</span><div class="opts" data-id="s4"><button class="btn-opt" onclick="chkS(this, '>', 's4')">&lt;</button><button class="btn-opt" onclick="chkS(this, '>', 's4')">&gt;</button><button class="btn-opt" onclick="chkS(this, '>', 's4')">=</button></div></div>
+            <div class="task-unit"><span class="math-text">12 <div class="empty-box" id="box-s1"></div> 18</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '<', 's1')">&lt;</button><button class="btn-opt" onclick="chkS(this, '<', 's1')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 's1')">=</button></div></div>
+            <div class="task-unit"><span class="math-text">15 <div class="empty-box" id="box-s2"></div> 15</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '=', 's2')">&gt;</button><button class="btn-opt" onclick="chkS(this, '=', 's2')">&lt;</button><button class="btn-opt" onclick="chkS(this, '=', 's2')">=</button></div></div>
+            <div class="task-unit"><span class="math-text">13 <div class="empty-box" id="box-s3"></div> 10</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '>', 's3')">&lt;</button><button class="btn-opt" onclick="chkS(this, '>', 's3')">&gt;</button><button class="btn-opt" onclick="chkS(this, '>', 's3')">=</button></div></div>
+            <div class="task-unit"><span class="math-text">9 <div class="empty-box" id="box-s4"></div> 11</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '<', 's4')">&lt;</button><button class="btn-opt" onclick="chkS(this, '<', 's4')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 's4')">=</button></div></div>
         </div>
     </div>
 
     <div class="card card-6">
         <h2>Зад. 6: ⚔️ Математически двубой</h2>
         <div class="grid">
-            <div class="task-unit"><span class="math-text">12 + 5 <div class="empty-box"></div> 18</span><div class="opts" data-id="d1"><button class="btn-opt" onclick="chkS(this, '<', 'd1')">=</button><button class="btn-opt" onclick="chkS(this, '<', 'd1')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 'd1')">&lt;</button></div></div>
-            <div class="task-unit"><span class="math-text">11 - 2 <div class="empty-box"></div> 9</span><div class="opts" data-id="d2"><button class="btn-opt" onclick="chkS(this, '=', 'd2')">=</button><button class="btn-opt" onclick="chkS(this, '=', 'd2')">&lt;</button><button class="btn-opt" onclick="chkS(this, '=', 'd2')">&gt;</button></div></div>
-            <div class="task-unit"><span class="math-text">11 + 3 <div class="empty-box"></div> 20</span><div class="opts" data-id="d3"><button class="btn-opt" onclick="chkS(this, '<', 'd3')">&lt;</button><button class="btn-opt" onclick="chkS(this, '<', 'd3')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 'd3')">=</button></div></div>
-            <div class="task-unit"><span class="math-text">4 + 6 <div class="empty-box"></div> 9</span><div class="opts" data-id="d4"><button class="btn-opt" onclick="chkS(this, '>', 'd4')">=</button><button class="btn-opt" onclick="chkS(this, '>', 'd4')">&lt;</button><button class="btn-opt" onclick="chkS(this, '>', 'd4')">&gt;</button></div></div>
+            <div class="task-unit"><span class="math-text">12 + 5 <div class="empty-box" id="box-d1"></div> 18</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '<', 'd1')">=</button><button class="btn-opt" onclick="chkS(this, '<', 'd1')">&gt;</button><button class="btn-opt" onclick="chkS(this, '<', 'd1')">&lt;</button></div></div>
+            <div class="task-unit"><span class="math-text">11 - 2 <div class="empty-box" id="box-d2"></div> 9</span><div class="opts"><button class="btn-opt" onclick="chkS(this, '=', 'd2')">=</button><button class="btn-opt" onclick="chkS(this, '=', 'd2')">&lt;</button><button class="btn-opt" onclick="chkS(this, '=', 'd2')">&gt;</button></div></div>
         </div>
     </div>
 
     <div class="card card-5">
         <h2>Зад. 7: 🏰 Тайните на Геометричния замък</h2>
-        <img src="image.jpg" alt="Замък" class="castle-img">
+        <img src="https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?q=80&w=400" alt="Замък" class="castle-img">
         <div class="grid">
-            <div class="task-unit"><span>Колко кръга?</span><div class="opts" data-id="g1"><button class="btn-opt" onclick="chk(this, 4, 'g1')">4</button><button class="btn-opt" onclick="chk(this, 4, 'g1')">3</button><button class="btn-opt" onclick="chk(this, 4, 'g1')">5</button></div></div>
-            <div class="task-unit"><span>Колко триъгълника?</span><div class="opts" data-id="g2"><button class="btn-opt" onclick="chk(this, 3, 'g2')">2</button><button class="btn-opt" onclick="chk(this, 3, 'g2')">4</button><button class="btn-opt" onclick="chk(this, 3, 'g2')">3</button></div></div>
-            <div class="task-unit" style="grid-column: span 2;"><span>Колко правоъгълника?</span><div class="opts" data-id="g3"><button class="btn-opt" onclick="chk(this, 3, 'g3')">4</button><button class="btn-opt" onclick="chk(this, 3, 'g3')">3</button><button class="btn-opt" onclick="chk(this, 3, 'g3')">5</button></div></div>
+            <div class="task-unit"><span>Кръгове?</span><div class="opts"><button class="btn-opt" onclick="chk(this, 4)">4</button><button class="btn-opt" onclick="chk(this, 4)">3</button><button class="btn-opt" onclick="chk(this, 4)">5</button></div></div>
+            <div class="task-unit"><span>Триъгълници?</span><div class="opts"><button class="btn-opt" onclick="chk(this, 3)">2</button><button class="btn-opt" onclick="chk(this, 3)">4</button><button class="btn-opt" onclick="chk(this, 3)">3</button></div></div>
         </div>
     </div>
 
@@ -137,80 +117,49 @@
 
 <div id="overlay">
     <div class="success-card">
-        <h1 style="font-size: 4rem; color: #ff0066; margin-bottom: 10px;">БРАВО! 🌟</h1>
-        <p id="res-text" style="font-size: 2.2rem; color: #333; margin-bottom: 30px;"></p>
-        <button onclick="location.reload()" style="padding: 20px 50px; border-radius: 30px; border: none; background: #4caf50; color: white; font-size: 1.8rem; cursor: pointer; font-family: 'Comfortaa';">НОВА ИГРА</button>
+        <h1 style="font-size: 3rem; color: #ff0066;">БРАВО! 🌟</h1>
+        <p id="res-text" style="font-size: 1.8rem;"></p>
+        <button onclick="location.reload()" style="padding: 15px 30px; border-radius: 20px; border: none; background: #4caf50; color: white; cursor: pointer;">НОВА ИГРА</button>
     </div>
 </div>
 
 <script>
-    const tasks = [
-        { id: 1, q: "2 + 2 = ?", a: ["3", "4", "5"], correct: "4" },
-        { id: 2, q: "5 + 3 = ?", a: ["7", "8", "9"], correct: "8" },
-        { id: 3, q: "10 - 4 = ?", a: ["5", "6", "7"], correct: "6" },
-        { id: 4, q: "7 + 6 = ?", a: ["12", "13", "14"], correct: "13" }
-    ];
+    let score = 0;
+    let answered = 0;
 
-    let scores = {};
-    let answeredGroups = {};
+    function chk(btn, correct) {
+        let parent = btn.parentElement;
+        if (parent.classList.contains('locked')) return;
+        answered++;
+        if (btn.innerText == correct) { score++; btn.classList.add('btn-correct'); }
+        else { btn.classList.add('btn-wrong'); }
+        parent.classList.add('locked');
+    }
 
-    const grid = document.getElementById('game-grid');
-    tasks.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<h3>Задача ${t.id}</h3><p>${t.q}</p><div class="options" id="opt-${t.id}"></div>`;
-        grid.appendChild(card);
-
-        const optDiv = card.querySelector('.options');
-        t.a.forEach(option => {
-            const btn = document.createElement('button');
-            btn.innerText = option;
-            btn.onclick = () => {
-                const parent = document.getElementById(`opt-${t.id}`);
-                parent.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                scores[t.id] = (option === t.correct) ? 1 : 0;
-                answeredGroups[t.id] = true;
-            };
-            optDiv.appendChild(btn);
-        });
-    });
+    function chkS(btn, correct, boxId) {
+        let parent = btn.parentElement;
+        if (parent.classList.contains('locked')) return;
+        answered++;
+        document.getElementById('box-' + boxId).innerText = btn.innerText;
+        if (btn.innerText == correct) { score++; btn.classList.add('btn-correct'); }
+        else { btn.classList.add('btn-wrong'); }
+        parent.classList.add('locked');
+    }
 
     function finish() {
         let name = document.getElementById('p_name').value || "Малки герои";
-        let pts = Object.values(scores).reduce((a, b) => a + b, 0);
-        let total = tasks.length;
-        
-        if (Object.keys(answeredGroups).length < 1) { 
-            alert("Първо отговорете на задачите!"); 
-            return; 
-        }
+        if (answered < 1) { alert("Първо реши задачите!"); return; }
 
-        const sheetDB_URL = "https://sheetdb.io/api/v1/si1t90uvg95jc";
-
-        fetch(sheetDB_URL, {
+        fetch("https://sheetdb.io/api/v1/si1t90uvg95jc", {
             method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                data: [{ 'name': name, 'score': pts + " от " + total }]
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: [{ 'name': name, 'score': score + " от " + answered }] })
         });
 
         document.getElementById('overlay').style.display = 'flex';
-        document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
-        
-        confetti({ 
-            particleCount: 500, 
-            spread: 150, 
-            origin: { y: 0.6 },
-            colors: ['#ff0066', '#ffcc00', '#2196f3', '#4caf50']
-        });
+        document.getElementById('res-text').innerText = name + ", вие събрахте " + score + " точки от " + answered + "!";
+        confetti({ particleCount: 400, spread: 100, origin: { y: 0.6 } });
     }
 </script>
 </body>
 </html>
-
-
-
-
-
