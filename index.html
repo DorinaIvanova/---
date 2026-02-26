@@ -172,7 +172,7 @@
     }
 
     function finish() {
-        let name = document.getElementById('p_name').value || "Малък герой";
+        let name = document.getElementById('p_name').value || "Малки герои";
         let pts = Object.values(scores).reduce((a, b) => a + b, 0);
         let total = Object.keys(answeredGroups).length;
         if (total < 1) { alert("Първо реши задачите!"); return; }
@@ -183,3 +183,4 @@
 </script>
 </body>
 </html>
+
