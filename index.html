@@ -144,69 +144,72 @@
 </div>
 
 <script>
+    const tasks = [
+        { id: 1, q: "2 + 2 = ?", a: ["3", "4", "5"], correct: "4" },
+        { id: 2, q: "5 + 3 = ?", a: ["7", "8", "9"], correct: "8" },
+        { id: 3, q: "10 - 4 = ?", a: ["5", "6", "7"], correct: "6" },
+        { id: 4, q: "7 + 6 = ?", a: ["12", "13", "14"], correct: "13" }
+    ];
+
     let scores = {};
     let answeredGroups = {};
 
-    function chk(btn, ans, groupID) {
-        if (answeredGroups[groupID]) return;
-        answeredGroups[groupID] = true;
-        let parent = btn.parentElement;
-        parent.querySelectorAll('.btn-opt').forEach(b => {
-            b.classList.add('locked');
-            if (parseInt(b.innerText) === ans) b.classList.add('btn-correct');
-        });
-        if (parseInt(btn.innerText) === ans) { scores[groupID] = 1; } 
-        else { btn.classList.add('btn-wrong'); scores[groupID] = 0; }
-    }
+    const grid = document.getElementById('game-grid');
+    tasks.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>Задача ${t.id}</h3><p>${t.q}</p><div class="options" id="opt-${t.id}"></div>`;
+        grid.appendChild(card);
 
-    function chkS(btn, ans, groupID) {
-        if (answeredGroups[groupID]) return;
-        answeredGroups[groupID] = true;
-        let parent = btn.parentElement;
-        parent.querySelectorAll('.btn-opt').forEach(b => {
-            b.classList.add('locked');
-            if (b.innerText === ans) b.classList.add('btn-correct');
+        const optDiv = card.querySelector('.options');
+        t.a.forEach(option => {
+            const btn = document.createElement('button');
+            btn.innerText = option;
+            btn.onclick = () => {
+                const parent = document.getElementById(`opt-${t.id}`);
+                parent.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                scores[t.id] = (option === t.correct) ? 1 : 0;
+                answeredGroups[t.id] = true;
+            };
+            optDiv.appendChild(btn);
         });
-        if (btn.innerText === ans) { scores[groupID] = 1; } 
-        else { btn.classList.add('btn-wrong'); scores[groupID] = 0; }
-    }
+    });
 
     function finish() {
-    let name = document.getElementById('p_name').value || "Малки герои";
-    let pts = Object.values(scores).reduce((a, b) => a + b, 0);
-    let total = Object.keys(answeredGroups).length;
-    
-    if (total < 1) { alert("Първо реши задачите!"); return; }
+        let name = document.getElementById('p_name').value || "Малки герои";
+        let pts = Object.values(scores).reduce((a, b) => a + b, 0);
+        let total = tasks.length;
+        
+        if (Object.keys(answeredGroups).length < 1) { 
+            alert("Първо отговорете на задачите!"); 
+            return; 
+        }
 
-    // ТВОЯТ ЛИНК Е ВЕЧЕ ТУК:
-    const sheetDB_URL = "https://sheetdb.io/api/v1/si1t90uvg95jc";
+        const sheetDB_URL = "https://sheetdb.io/api/v1/si1t90uvg95jc";
 
-    fetch(sheetDB_URL, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            data: [
-                {
-                    'name': name,
-                    'score': pts + " от " + total
-                }
-            ]
-        })
-    }).then(response => console.log("Успешно изпратено!"));
+        fetch(sheetDB_URL, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                data: [{ 'name': name, 'score': pts + " от " + total }]
+            })
+        });
 
-    // ЕФЕКТИ НА ЕКРАНА
-    document.getElementById('overlay').style.display = 'flex';
-    document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
-    confetti({ 
-        particleCount: 500, 
-        spread: 150, 
-        origin: { y: 0.6 },
-        colors: ['#ff0066', '#ffcc00', '#2196f3', '#4caf50']
-    });
-}
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
+        
+        confetti({ 
+            particleCount: 500, 
+            spread: 150, 
+            origin: { y: 0.6 },
+            colors: ['#ff0066', '#ffcc00', '#2196f3', '#4caf50']
+        });
+    }
+</script>
+</body>
+</html>
+
 
 
 
