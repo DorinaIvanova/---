@@ -172,17 +172,42 @@
     }
 
     function finish() {
-        let name = document.getElementById('p_name').value || "Малки герои";
-        let pts = Object.values(scores).reduce((a, b) => a + b, 0);
-        let total = Object.keys(answeredGroups).length;
-        if (total < 1) { alert("Първо реши задачите!"); return; }
-        document.getElementById('overlay').style.display = 'flex';
-        document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
-        confetti({ particleCount: 500, spread: 150, origin: { y: 0.6 } });
-    }
-</script>
-</body>
-</html>
+    let name = document.getElementById('p_name').value || "Малки герои";
+    let pts = Object.values(scores).reduce((a, b) => a + b, 0);
+    let total = Object.keys(answeredGroups).length;
+    
+    if (total < 1) { alert("Първо реши задачите!"); return; }
+
+    // ТВОЯТ ЛИНК Е ВЕЧЕ ТУК:
+    const sheetDB_URL = "https://sheetdb.io/api/v1/si1t90uvg95jc";
+
+    fetch(sheetDB_URL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data: [
+                {
+                    'name': name,
+                    'score': pts + " от " + total
+                }
+            ]
+        })
+    }).then(response => console.log("Успешно изпратено!"));
+
+    // ЕФЕКТИ НА ЕКРАНА
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('res-text').innerText = name + ", вие събрахте " + pts + " точки от " + total + "!";
+    confetti({ 
+        particleCount: 500, 
+        spread: 150, 
+        origin: { y: 0.6 },
+        colors: ['#ff0066', '#ffcc00', '#2196f3', '#4caf50']
+    });
+}
+
 
 
 
